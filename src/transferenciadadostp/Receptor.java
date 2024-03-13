@@ -38,7 +38,8 @@ public class Receptor {
         
         return true;
     }
-    
+
+    //decodifica bits de CRC, retornando true se estiverem sem erros
     private static boolean decodificarDadoCRC(boolean[] bitsOriginais){
 
         int posicaoFinal = polimonio.length - 1;
@@ -59,6 +60,7 @@ public class Receptor {
             }
             //primeiro bit = 0
             else {
+                //XOR com zeros
                 for (int indice = 0; indice < polimonio.length; indice++) {
                     resto[indice] = bitsXOR[indice];
                 }
