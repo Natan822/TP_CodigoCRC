@@ -80,6 +80,8 @@ public class Transmissor {
         modifique o que precisar neste método
         */
 
+        bitsOriginais = getBinarioSemZerosEsquerda(bitsOriginais);
+
         boolean[] bitsComZeros = new boolean[bitsOriginais.length + (polimonio.length - 1)];
 
         //armazena o dado orignal com os zeros adicionais em um novo vetor
