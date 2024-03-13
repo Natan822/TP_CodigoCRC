@@ -74,8 +74,8 @@ public class Transmissor {
     }
 
     //codifica bits com CRC
-    public static boolean[] dadoBitsCRC(boolean bitsOriginais[]){
-        
+    public static boolean[] dadoBitsCRC_original(boolean bitsOriginais[]){
+
         /*sua implementação aqui!!!
         modifique o que precisar neste método
         */
@@ -111,7 +111,7 @@ public class Transmissor {
 
             if (posicaoFinal == bitsComZeros.length - 1)
                 break;
-            
+
             //remove os zeros a esquerda do resto e armazena a quantidade removida em zerosRemovidos
             int zerosRemovidos = removeZerosEsquerda(resto);
 
@@ -131,6 +131,70 @@ public class Transmissor {
         //copia os bits originais para um novo vetor
         boolean[] bitsCRC = Arrays.copyOf(bitsOriginais, bitsOriginais.length + (polimonio.length - 1));
 
+        int ultimaPosicaoResto;
+        int ultimaPosicaoBitsCRC;
+
+        //adiciona resto aos bits originais, gerando os bits codificados
+        for (int indice = 0; indice < polimonio.length - 1; indice++) {
+            ultimaPosicaoResto = resto.length - 1 - indice;
+            ultimaPosicaoBitsCRC = bitsCRC.length - 1 - indice;
+            bitsCRC[ultimaPosicaoBitsCRC] = resto[ultimaPosicaoResto];
+
+        }
+        return bitsCRC;
+    }
+
+    //codifica CRC
+    public static boolean[] dadoBitsCRC(boolean bitsOriginais[]) {
+        //remove possiveis zeros a esquerda do binario
+        bitsOriginais = getBinarioSemZerosEsquerda(bitsOriginais);
+
+        boolean[] bitsComZeros = new boolean[bitsOriginais.length + (polimonio.length - 1)];
+
+        //armazena o dado orignal com os zeros adicionais em um novo vetor
+        for (int bit = 0; bit < bitsComZeros.length; bit++) {
+            if (bit < bitsOriginais.length)
+                bitsComZeros[bit] = bitsOriginais[bit];
+            else
+                bitsComZeros[bit] = false;
+        }
+
+        int posicaoInicial = 0;
+        int posicaoFinal = polimonio.length - 1;
+
+        boolean[] resto = new boolean[polimonio.length];
+
+        //bits que serao usados na operacao XOR
+        boolean[] bitsXOR = Arrays.copyOfRange(bitsComZeros, 0, polimonio.length);
+
+        while (posicaoFinal < bitsComZeros.length) {
+
+            //primeiro bit = 1
+            if (bitsXOR[0]) {
+                //Operacao XOR, armazenando o resultado no resto
+                for (int indice = 0; indice < polimonio.length; indice++) {
+                    resto[indice] = bitsXOR[indice] != polimonio[indice];
+                }
+            }
+            //primeiro bit = 0
+            else {
+                for (int indice = 0; indice < polimonio.length; indice++) {
+                    resto[indice] = bitsXOR[indice];
+                }
+            }
+            //primeiro bit do resto = 0
+            if (!resto[0]) {
+                for (int indice = 0; indice < resto.length - 1; indice++) {
+                    resto[indice] = resto[indice + 1];
+                }
+
+                resto[resto.length - 1] = bitsComZeros[posicaoFinal];
+                posicaoFinal++;
+            }
+            bitsXOR = Arrays.copyOf(resto, resto.length);
+        }
+
+        boolean[] bitsCRC = Arrays.copyOf(bitsComZeros, bitsComZeros.length);
         int ultimaPosicaoResto;
         int ultimaPosicaoBitsCRC;
 
