@@ -88,11 +88,27 @@ public class Receptor {
         
     }
 
+    private boolean[] removeCRC(boolean[] bits) {
+        bits = Arrays.copyOfRange(bits, 0, bits.length - polimonio.length + 1);
+        if (bits.length < 8) {
+            boolean[] bitsConvertidos = new boolean[8];
+            int zerosParaAdicionar = 8 - bits.length;
+            for (int indice = 0; indice < 8; indice++) {
+                if (indice < zerosParaAdicionar)
+                    bitsConvertidos[indice] = false;
+                else
+                    bitsConvertidos[indice] = bits[indice - zerosParaAdicionar];
+            }
+            bits = Arrays.copyOf(bitsConvertidos, bitsConvertidos.length);
+        }
+        return bits;
+    }
     //recebe os dados do transmissor
     public boolean receberDadoBits(boolean bits[]){
         
         //aqui você deve trocar o médodo decofificarDado para decoficarDadoCRC (implemente!!)
         if (decodificarDadoCRC(bits)) {
+            bits = removeCRC(bits);
             decodificarDado(bits);
             return true;
         }

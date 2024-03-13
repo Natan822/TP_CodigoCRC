@@ -219,13 +219,16 @@ public class Transmissor {
 
             //codifica bits
             boolean bitsCRC[] = dadoBitsCRC(bits);
-            
-            //add ruidos na mensagem a ser enviada para o receptor
-            geradorRuido(bitsCRC);
-            
-            //enviando a mensagem "pela rede" para o receptor (uma forma de testarmos esse método)
-            boolean indicadorCRC = receptor.receberDadoBits(bits);
-            //o que faremos com o indicador quando houver algum erro? qual ação vamos tomar com o retorno do receptor
+
+            boolean indicadorCRC = false;
+
+            while (!indicadorCRC) {
+                //add ruidos na mensagem a ser enviada para o receptor
+                geradorRuido(bitsCRC);
+                //enviando a mensagem "pela rede" para o receptor (uma forma de testarmos esse método)
+                indicadorCRC = receptor.receberDadoBits(bitsCRC);
+                //o que faremos com o indicador quando houver algum erro? qual ação vamos tomar com o retorno do receptor
+            }
         }
     }
 
