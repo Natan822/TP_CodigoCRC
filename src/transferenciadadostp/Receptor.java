@@ -36,7 +36,6 @@ public class Receptor {
         //concatenando cada simbolo na mensagem original
         this.mensagem += (char)codigoAscii;
         
-        //esse retorno precisa ser pensado... será que o dado sempre chega sem ruído???
         return true;
     }
     

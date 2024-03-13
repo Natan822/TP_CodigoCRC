@@ -75,12 +75,11 @@ public class Transmissor {
     }
 
     //codifica bits com CRC
-    public static boolean[] dadoBitsCRC(boolean bitsOriginais[]) {
+    public static boolean[] dadoBitsCRC(boolean[] bitsOriginais) {
         //remove possiveis zeros a esquerda do binario
         bitsOriginais = getBinarioSemZerosEsquerda(bitsOriginais);
 
         boolean[] bitsComZeros = new boolean[bitsOriginais.length + (polimonio.length - 1)];
-
         //armazena o dado orignal com os zeros adicionais em um novo vetor
         for (int bit = 0; bit < bitsComZeros.length; bit++) {
             if (bit < bitsOriginais.length)
@@ -89,9 +88,7 @@ public class Transmissor {
                 bitsComZeros[bit] = false;
         }
 
-        int posicaoInicial = 0;
         int posicaoFinal = polimonio.length - 1;
-
         boolean[] resto = new boolean[polimonio.length];
 
         //bits que serao usados na operacao XOR
@@ -148,15 +145,12 @@ public class Transmissor {
             boolean indicadorCRC = false;
 
             while (!indicadorCRC) {
-            //codifica bits
-            boolean bitsCRC[] = dadoBitsCRC(bits);
-
-
+                //codifica bits
+                boolean bitsCRC[] = dadoBitsCRC(bits);
                 //add ruidos na mensagem a ser enviada para o receptor
                 geradorRuido(bitsCRC);
                 //enviando a mensagem "pela rede" para o receptor (uma forma de testarmos esse método)
                 indicadorCRC = receptor.receberDadoBits(bitsCRC);
-                //o que faremos com o indicador quando houver algum erro? qual ação vamos tomar com o retorno do receptor
             }
         }
     }
