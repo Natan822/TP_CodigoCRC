@@ -216,13 +216,13 @@ public class Transmissor {
     public void enviaDado(Receptor receptor){
         for(int i = 0; i < this.mensagem.length();i++){
             boolean bits[] = streamCaracter(this.mensagem.charAt(i));
-
-            //codifica bits
-            boolean bitsCRC[] = dadoBitsCRC(bits);
-
             boolean indicadorCRC = false;
 
             while (!indicadorCRC) {
+            //codifica bits
+            boolean bitsCRC[] = dadoBitsCRC(bits);
+
+
                 //add ruidos na mensagem a ser enviada para o receptor
                 geradorRuido(bitsCRC);
                 //enviando a mensagem "pela rede" para o receptor (uma forma de testarmos esse método)
