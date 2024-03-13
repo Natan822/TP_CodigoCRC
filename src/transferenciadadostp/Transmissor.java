@@ -60,6 +60,19 @@ public class Transmissor {
         return zerosRemovidos;
     }
 
+    //remove os zeros a esquerda de um binario e retorna um novo vetor
+    public static boolean[] getBinarioSemZerosEsquerda(boolean[] bits) {
+        int posicaoInicial = 0;
+        for (int indice = 0; indice < bits.length; indice++) {
+            if (bits[indice]) {
+                posicaoInicial = indice;
+                break;
+            }
+        }
+        return Arrays.copyOfRange(bits, posicaoInicial, bits.length);
+
+    }
+
     //codifica bits com CRC
     public static boolean[] dadoBitsCRC(boolean bitsOriginais[]){
         
