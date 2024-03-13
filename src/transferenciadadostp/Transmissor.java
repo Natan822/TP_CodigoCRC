@@ -117,9 +117,9 @@ public class Transmissor {
 
             //adiciona bits de volta ao resto a partir de bitsComZeros para compensar os zeros removidos
             for (int i = 0; i < zerosRemovidos; i++) {
-                if (posicaoFinal < bitsComZeros.length) {
-                    resto[resto.length - zerosRemovidos + i] = bitsComZeros[posicaoFinal];
+                if (posicaoFinal + 1 < bitsComZeros.length) {
                     posicaoFinal++;
+                    resto[resto.length - zerosRemovidos + i] = bitsComZeros[posicaoFinal];
                 }
                 else break;
             }
