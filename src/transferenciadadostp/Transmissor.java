@@ -9,6 +9,7 @@ public class Transmissor {
     //polimonio gerador = 1011000110
     //public static boolean[] polimonio = {true, false, true, true, false, false, false, true, true, false};
     public static boolean[] polimonio = {true, true, false, true, true, false, false};
+    //public static boolean[] polimonio = {true, false, false, false, true, true, false, false, true};
     public Transmissor(String mensagem) {
         this.mensagem = mensagem;
     }

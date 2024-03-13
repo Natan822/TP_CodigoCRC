@@ -41,21 +41,7 @@ public class Receptor {
     }
     
     private static boolean decodificarDadoCRC(boolean[] bitsOriginais){
-        
-        //implemente a decodificação Hemming aqui e encontre os 
-        //erros e faça as devidas correções para ter a imagem correta
-        
-        //armazena o dado orignal com os zeros adicionais em um novo vetor
-        for (int bit = 0; bit < bitsOriginais.length; bit++) {
-            if (bit < bitsOriginais.length)
-                bitsOriginais[bit] = bitsOriginais[bit];
-            else
-                bitsOriginais[bit] = false;
-        }
-        System.out.print("Bits com Zeros: ");
-        printBin(bitsOriginais);
 
-        int posicaoInicial = 0;
         int posicaoFinal = polimonio.length - 1;
 
         boolean[] resto = new boolean[polimonio.length];
@@ -63,41 +49,39 @@ public class Receptor {
         //bits que serao usados na operacao XOR
         boolean[] bitsXOR = Arrays.copyOfRange(bitsOriginais, 0, polimonio.length);
 
-        while (posicaoFinal != bitsOriginais.length) {
-            int indiceResto = 0;
+        while (posicaoFinal < bitsOriginais.length) {
 
-            System.out.print("Bits XOR:");
-            printBin(bitsXOR);
-
-            //operacao XOR com o polimonio, registrando o resultado em "resto"
-            for (int indice = 0; indice < polimonio.length; indice++) {
-                resto[indice] = bitsXOR[indice] != polimonio[indice];
+            //primeiro bit = 1
+            if (bitsXOR[0]) {
+                //Operacao XOR, armazenando o resultado no resto
+                for (int indice = 0; indice < polimonio.length; indice++) {
+                    resto[indice] = bitsXOR[indice] != polimonio[indice];
+                }
             }
-
-            if (posicaoFinal == bitsOriginais.length - 1)
-                break;
-            
-            //remove os zeros a esquerda do resto e armazena a quantidade removida em zerosRemovidos
-            int zerosRemovidos = removeZerosEsquerda(resto);
-
-            //adiciona bits de volta ao resto a partir de bitsComZeros para compensar os zeros removidos
-            for (int i = 0; i < zerosRemovidos; i++) {
-                System.out.print("Resto: ");
-                printBin(resto);
-                resto[resto.length - zerosRemovidos + i] = bitsOriginais[posicaoFinal];
-                posicaoFinal++;
+            //primeiro bit = 0
+            else {
+                for (int indice = 0; indice < polimonio.length; indice++) {
+                    resto[indice] = bitsXOR[indice];
+                }
             }
-            //atualiza os bits para a proxima operacao, copiando os valores de resto para bitsXOR
+            //primeiro bit do resto = 0
+            if (!resto[0]) {
+                if (posicaoFinal < bitsOriginais.length - 1){
+                    for (int indice = 0; indice < resto.length - 1; indice++) {
+                        resto[indice] = resto[indice + 1];
+                    }
+
+
+                    posicaoFinal++;
+                    resto[resto.length - 1] = bitsOriginais[posicaoFinal];
+                }
+                else break;
+            }
             bitsXOR = Arrays.copyOf(resto, resto.length);
-
         }
-        
-        System.out.print("Resto Final: ");
-        printBin(resto);
-        //checa se o resto é 0
-        for (boolean bit: resto) {
-            //se houver algum bit 1, retorna falso
-            if (bit)
+
+        for (int indice = 0; indice < resto.length; indice++) {
+            if (resto[indice])
                 return false;
         }
         return true;
@@ -122,13 +106,14 @@ public class Receptor {
         System.out.print("Mensagem original: ");
         //boolean[] mensagem = {true, false, true, true, true};
         boolean[] mensagem = {false, true, true, false, false, false, false, true};
+        //boolean[] mensagem = {true, true, true, true, true, false, false, true, true, false, false};
         printBin(mensagem);
         boolean[] mensagemCodificada = dadoBitsCRC(mensagem);
         System.out.print("Mensagem codificada: ");
         printBin(mensagemCodificada);
-//        if (decodificarDadoCRC(mensagemCodificada))
-//            System.out.println("mensagem correta");
-//        else
-//            System.out.println("mensagem com erro");
+        if (decodificarDadoCRC(mensagemCodificada))
+            System.out.println("mensagem correta");
+        else
+            System.out.println("mensagem com erro");
     }
 }
