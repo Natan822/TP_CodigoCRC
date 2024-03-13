@@ -126,9 +126,9 @@ public class Receptor {
         boolean[] mensagemCodificada = dadoBitsCRC(mensagem);
         System.out.print("Mensagem codificada: ");
         printBin(mensagemCodificada);
-        if (decodificarDadoCRC(mensagemCodificada))
-            System.out.println("mensagem correta");
-        else
-            System.out.println("mensagem com erro");
+//        if (decodificarDadoCRC(mensagemCodificada))
+//            System.out.println("mensagem correta");
+//        else
+//            System.out.println("mensagem com erro");
     }
 }

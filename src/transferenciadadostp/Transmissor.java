@@ -184,12 +184,16 @@ public class Transmissor {
             }
             //primeiro bit do resto = 0
             if (!resto[0]) {
-                for (int indice = 0; indice < resto.length - 1; indice++) {
-                    resto[indice] = resto[indice + 1];
-                }
+                if (posicaoFinal < bitsComZeros.length - 1){
+                    for (int indice = 0; indice < resto.length - 1; indice++) {
+                        resto[indice] = resto[indice + 1];
+                    }
 
-                resto[resto.length - 1] = bitsComZeros[posicaoFinal];
-                posicaoFinal++;
+
+                    posicaoFinal++;
+                    resto[resto.length - 1] = bitsComZeros[posicaoFinal];
+                }
+                else break;
             }
             bitsXOR = Arrays.copyOf(resto, resto.length);
         }
