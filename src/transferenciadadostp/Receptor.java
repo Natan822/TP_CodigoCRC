@@ -96,7 +96,7 @@ public class Receptor {
         printBin(resto);
         //checa se o resto é 0
         for (boolean bit: resto) {
-            //se houver um bit 1, retorna falso
+            //se houver algum bit 1, retorna falso
             if (bit)
                 return false;
         }
@@ -119,9 +119,12 @@ public class Receptor {
     
     //teste
     public static void main(String[] args) {
+        System.out.print("Mensagem original: ");
         boolean[] mensagem = {true, false, true, true, true};
+        printBin(mensagem);
         boolean[] mensagemCodificada = dadoBitsCRC(mensagem);
-        
+        System.out.print("Mensagem codificada: ");
+        printBin(mensagemCodificada);
         if (decodificarDadoCRC(mensagemCodificada))
             System.out.println("mensagem correta");
         else

@@ -85,7 +85,7 @@ public class Transmissor {
         //bits que serao usados na operacao XOR
         boolean[] bitsXOR = Arrays.copyOfRange(bitsComZeros, 0, polimonio.length);
 
-        while (posicaoFinal != bitsComZeros.length) {
+        while (posicaoFinal < bitsComZeros.length) {
             int indiceResto = 0;
 
 
@@ -102,8 +102,11 @@ public class Transmissor {
 
             //adiciona bits de volta ao resto a partir de bitsComZeros para compensar os zeros removidos
             for (int i = 0; i < zerosRemovidos; i++) {
-                resto[resto.length - zerosRemovidos + i] = bitsComZeros[posicaoFinal];
-                posicaoFinal++;
+                if (posicaoFinal < bitsComZeros.length) {
+                    resto[resto.length - zerosRemovidos + i] = bitsComZeros[posicaoFinal];
+                    posicaoFinal++;
+                }
+                else break;
             }
             //atualiza os bits para a proxima operacao, copiando os valores de resto para bitsXOR
             bitsXOR = Arrays.copyOf(resto, resto.length);
