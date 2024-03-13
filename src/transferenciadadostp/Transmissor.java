@@ -172,11 +172,4 @@ public class Transmissor {
         System.out.println();
     }
 
-    //teste
-    public static void main(String[] args) {
-        boolean[] mensagem = {true, false, true, true, true};
-        printBin(mensagem);
-        boolean[] mensagemCodificada = dadoBitsCRC(mensagem);
-        printBin(mensagemCodificada);
-    }
 }

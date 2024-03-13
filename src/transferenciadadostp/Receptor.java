@@ -117,19 +117,4 @@ public class Receptor {
         return false;
     }
     
-    //teste
-    public static void main(String[] args) {
-        System.out.print("Mensagem original: ");
-        //boolean[] mensagem = {true, false, true, true, true};
-        boolean[] mensagem = {false, true, true, false, false, false, false, true};
-        //boolean[] mensagem = {true, true, true, true, true, false, false, true, true, false, false};
-        printBin(mensagem);
-        boolean[] mensagemCodificada = dadoBitsCRC(mensagem);
-        System.out.print("Mensagem codificada: ");
-        printBin(mensagemCodificada);
-        if (decodificarDadoCRC(mensagemCodificada))
-            System.out.println("mensagem correta");
-        else
-            System.out.println("mensagem com erro");
-    }
 }
