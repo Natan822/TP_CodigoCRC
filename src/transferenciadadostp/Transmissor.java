@@ -59,7 +59,7 @@ public class Transmissor {
     }
 
     //codifica bits com CRC
-    public static boolean[] dadoBitsCRC(boolean[] bitsOriginais) {
+    private static boolean[] dadoBitsCRC(boolean[] bitsOriginais) {
         //remove possiveis zeros a esquerda do binario
         bitsOriginais = getBinarioSemZerosEsquerda(bitsOriginais);
 
