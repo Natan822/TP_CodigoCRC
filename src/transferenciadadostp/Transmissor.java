@@ -45,20 +45,6 @@ public class Transmissor {
         }
     }
 
-    //remove os zeros a esquerda, retornando a quantidade removida
-    public static int removeZerosEsquerda(boolean[] bits) {
-        int zerosRemovidos = 0;
-        System.out.print("Resto antes de remover zeros: ");
-        printBin(bits);
-        while (!bits[0]) { //enquanto primeiro bit for 0
-            for (int indice = 0; indice < bits.length - 1; indice++) {
-                bits[indice] = bits[indice + 1];
-            }
-            zerosRemovidos++;
-        }
-        return zerosRemovidos;
-    }
-
     //remove os zeros a esquerda de um binario e retorna um novo vetor
     public static boolean[] getBinarioSemZerosEsquerda(boolean[] bits) {
         int posicaoInicial = 0;

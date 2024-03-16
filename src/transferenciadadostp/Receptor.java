@@ -4,8 +4,6 @@ import java.util.Arrays;
 import  transferenciadadostp.Transmissor;
 import static transferenciadadostp.Transmissor.dadoBitsCRC;
 import static transferenciadadostp.Transmissor.polimonio;
-import static transferenciadadostp.Transmissor.printBin;
-import static transferenciadadostp.Transmissor.removeZerosEsquerda;
 
 public class Receptor {
     
