@@ -1,8 +1,6 @@
 package transferenciadadostp;
 
 import java.util.Arrays;
-import  transferenciadadostp.Transmissor;
-import static transferenciadadostp.Transmissor.dadoBitsCRC;
 import static transferenciadadostp.Transmissor.polimonio;
 
 public class Receptor {
