@@ -152,16 +152,4 @@ public class Transmissor {
             }
         }
     }
-
-    //teste
-    public static void printBin(boolean[] vetor) {
-        for (boolean a : vetor) {
-            if (a)
-                System.out.print(1);
-            else
-                System.out.print(0);
-        }
-        System.out.println();
-    }
-
 }
