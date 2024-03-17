@@ -16,7 +16,8 @@ public class Receptor {
     public String getMensagem() {
         return mensagem;
     }
- 
+
+    //converte bits para caracter da tabela ASCII
     private boolean decodificarDado(boolean bits[]){
         int codigoAscii = 0;
         int expoente = bits.length-1;
@@ -85,6 +86,7 @@ public class Receptor {
         
     }
 
+    //remove bits do CRC
     private boolean[] removeCRC(boolean[] bits) {
         bits = Arrays.copyOfRange(bits, 0, bits.length - polimonio.length + 1);
         if (bits.length < 8) {
@@ -100,6 +102,7 @@ public class Receptor {
         }
         return bits;
     }
+
     //recebe os dados do transmissor
     public boolean receberDadoBits(boolean bits[]){
         
