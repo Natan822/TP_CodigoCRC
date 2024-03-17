@@ -46,7 +46,7 @@ public class Transmissor {
     }
 
     //remove os zeros a esquerda de um binario e retorna um novo vetor
-    public static boolean[] getBinarioSemZerosEsquerda(boolean[] bits) {
+    public boolean[] getBinarioSemZerosEsquerda(boolean[] bits) {
         int posicaoInicial = 0;
         for (int indice = 0; indice < bits.length; indice++) {
             if (bits[indice]) {
@@ -59,7 +59,7 @@ public class Transmissor {
     }
 
     //codifica bits com CRC
-    private static boolean[] dadoBitsCRC(boolean[] bitsOriginais) {
+    private boolean[] dadoBitsCRC(boolean[] bitsOriginais) {
         //remove possiveis zeros a esquerda do binario
         bitsOriginais = getBinarioSemZerosEsquerda(bitsOriginais);
 
