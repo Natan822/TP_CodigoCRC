@@ -6,7 +6,7 @@ import java.util.Random;
 public class Transmissor {
     private String mensagem;
     //polimonio gerador = 1011000110
-    public static final boolean[] polimonio = {true, false, true, true, false, false, false, true, true, false};
+    public static final boolean[] POLIMONIO = {true, false, true, true, false, false, false, true, true, false};
 
     public Transmissor(String mensagem) {
         this.mensagem = mensagem;
@@ -63,7 +63,7 @@ public class Transmissor {
         //remove possiveis zeros a esquerda do binario
         bitsOriginais = getBinarioSemZerosEsquerda(bitsOriginais);
 
-        boolean[] bitsComZeros = new boolean[bitsOriginais.length + (polimonio.length - 1)];
+        boolean[] bitsComZeros = new boolean[bitsOriginais.length + (POLIMONIO.length - 1)];
         //armazena o dado orignal com os zeros adicionais em um novo vetor
         for (int bit = 0; bit < bitsComZeros.length; bit++) {
             if (bit < bitsOriginais.length)
@@ -72,24 +72,24 @@ public class Transmissor {
                 bitsComZeros[bit] = false;
         }
 
-        int posicaoFinal = polimonio.length - 1;
-        boolean[] resto = new boolean[polimonio.length];
+        int posicaoFinal = POLIMONIO.length - 1;
+        boolean[] resto = new boolean[POLIMONIO.length];
 
         //bits que serao usados na operacao XOR
-        boolean[] bitsXOR = Arrays.copyOfRange(bitsComZeros, 0, polimonio.length);
+        boolean[] bitsXOR = Arrays.copyOfRange(bitsComZeros, 0, POLIMONIO.length);
 
         while (posicaoFinal < bitsComZeros.length) {
 
             //primeiro bit = 1
             if (bitsXOR[0]) {
                 //Operacao XOR, armazenando o resultado no resto
-                for (int indice = 0; indice < polimonio.length; indice++) {
-                    resto[indice] = bitsXOR[indice] != polimonio[indice];
+                for (int indice = 0; indice < POLIMONIO.length; indice++) {
+                    resto[indice] = bitsXOR[indice] != POLIMONIO[indice];
                 }
             }
             //primeiro bit = 0
             else {
-                for (int indice = 0; indice < polimonio.length; indice++) {
+                for (int indice = 0; indice < POLIMONIO.length; indice++) {
                     resto[indice] = bitsXOR[indice];
                 }
             }
@@ -114,7 +114,7 @@ public class Transmissor {
         int ultimaPosicaoBitsCRC;
 
         //adiciona resto aos bits originais, gerando os bits codificados
-        for (int indice = 0; indice < polimonio.length - 1; indice++) {
+        for (int indice = 0; indice < POLIMONIO.length - 1; indice++) {
             ultimaPosicaoResto = resto.length - 1 - indice;
             ultimaPosicaoBitsCRC = bitsCRC.length - 1 - indice;
             bitsCRC[ultimaPosicaoBitsCRC] = resto[ultimaPosicaoResto];

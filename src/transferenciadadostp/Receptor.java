@@ -1,7 +1,7 @@
 package transferenciadadostp;
 
 import java.util.Arrays;
-import static transferenciadadostp.Transmissor.polimonio;
+import static transferenciadadostp.Transmissor.POLIMONIO;
 
 public class Receptor {
     
@@ -39,26 +39,26 @@ public class Receptor {
     //decodifica bits de CRC, retornando true se estiverem sem erros
     private boolean decodificarDadoCRC(boolean[] bitsOriginais){
 
-        int posicaoFinal = polimonio.length - 1;
+        int posicaoFinal = POLIMONIO.length - 1;
 
-        boolean[] resto = new boolean[polimonio.length];
+        boolean[] resto = new boolean[POLIMONIO.length];
 
         //bits que serao usados na operacao XOR
-        boolean[] bitsXOR = Arrays.copyOfRange(bitsOriginais, 0, polimonio.length);
+        boolean[] bitsXOR = Arrays.copyOfRange(bitsOriginais, 0, POLIMONIO.length);
 
         while (posicaoFinal < bitsOriginais.length) {
 
             //primeiro bit = 1
             if (bitsXOR[0]) {
                 //Operacao XOR, armazenando o resultado no resto
-                for (int indice = 0; indice < polimonio.length; indice++) {
-                    resto[indice] = bitsXOR[indice] != polimonio[indice];
+                for (int indice = 0; indice < POLIMONIO.length; indice++) {
+                    resto[indice] = bitsXOR[indice] != POLIMONIO[indice];
                 }
             }
             //primeiro bit = 0
             else {
                 //XOR com zeros
-                for (int indice = 0; indice < polimonio.length; indice++) {
+                for (int indice = 0; indice < POLIMONIO.length; indice++) {
                     resto[indice] = bitsXOR[indice];
                 }
             }
@@ -88,7 +88,7 @@ public class Receptor {
 
     //remove bits do CRC
     private boolean[] removeCRC(boolean[] bits) {
-        bits = Arrays.copyOfRange(bits, 0, bits.length - polimonio.length + 1);
+        bits = Arrays.copyOfRange(bits, 0, bits.length - POLIMONIO.length + 1);
         if (bits.length < 8) {
             boolean[] bitsConvertidos = new boolean[8];
             int zerosParaAdicionar = 8 - bits.length;
